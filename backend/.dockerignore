@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Environment files (use docker environment variables instead)
+.env
+.env.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Documentation
+*.md
+docs/
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads (will be in volume)
+uploads/
+temp/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Setup files
+setup.py
+setup.cfg
+pyproject.toml
+
+# Tests
+tests/
+test_*.py
+*_test.py
+conftest.py
+
+# Docker
+Dockerfile
+.dockerignore

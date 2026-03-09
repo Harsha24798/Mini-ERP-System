@@ -5,3 +5,7 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/Harsha24798/Mini-ERP-System---Flask-React-Postgres.git
 git push -u origin main
+
+
+Python Virtual Environment
+cd "c:\Users\harsh\OneDrive\Desktop\Flask Project\backend"; .\venv\Scripts\python.exe app.py
