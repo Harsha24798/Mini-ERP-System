@@ -15,9 +15,9 @@ jobs:
       postgres:
         image: postgres:15-alpine
         env:
-          POSTGRES_USER: test_user
-          POSTGRES_PASSWORD: test_password
-          POSTGRES_DB: test_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Harsha@1998
+          POSTGRES_DB: mini_erp_system
         ports:
           - 5432:5432
         options: >-
@@ -52,7 +52,7 @@ jobs:
       - name: Run tests with coverage
         working-directory: ./backend
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          DATABASE_URL: postgresql://postgres:Harsha@1998@localhost:5432/mini_erp_system
           SECRET_KEY: test-secret-key
           JWT_SECRET_KEY: test-jwt-secret-key
         run: |

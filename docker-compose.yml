@@ -6,8 +6,8 @@ services:
     image: postgres:15-alpine
     container_name: mini_erp_db
     environment:
-      POSTGRES_USER: erp_user
-      POSTGRES_PASSWORD: erp_password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Harsha@1998
       POSTGRES_DB: mini_erp_db
     ports:
       - "5432:5432"
@@ -16,7 +16,7 @@ services:
     networks:
       - erp_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U erp_user -d mini_erp_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mini_erp_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -42,6 +42,7 @@ services:
       dockerfile: Dockerfile
     container_name: mini_erp_backend
     environment:
+      - FLASK_APP=app:create_app
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://erp_user:erp_password@db:5432/mini_erp_db
       - REDIS_URL=redis://redis:6379/0
@@ -59,7 +60,7 @@ services:
         condition: service_healthy
     networks:
       - erp_network
-    command: flask run --host=0.0.0.0 --port=5000 --debug
+    command: python app.py
 
   # Frontend (React) - Will be added in Phase 6
   # frontend:
