@@ -1,0 +1,66 @@
+# Flask Core
+Flask==3.0.2
+Werkzeug==3.0.1
+
+# Database
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.0.5
+psycopg2-binary==2.9.9  # PostgreSQL adapter
+alembic==1.13.1
+
+# Authentication & Security
+Flask-JWT-Extended==4.6.0
+Flask-Bcrypt==1.0.1
+python-dotenv==1.0.1
+
+# CORS
+Flask-CORS==4.0.0
+
+# Validation
+marshmallow==3.20.2
+Flask-Marshmallow==0.15.0
+marshmallow-sqlalchemy==0.29.0
+
+# API Documentation
+flask-swagger-ui==4.11.1
+apispec==6.4.0
+
+# File Handling
+Pillow==10.2.0
+
+# PDF Generation (for Phase 4-5)
+reportlab==4.1.0
+WeasyPrint==60.2
+
+# Excel/CSV (for Phase 8-10)
+openpyxl==3.1.2
+pandas==2.2.0
+
+# Email (for Phase 15)
+Flask-Mail==0.9.1
+
+# Caching (for Phase 14)
+redis==5.0.1
+Flask-Caching==2.1.0
+
+# Task Queue (for Phase 15)
+celery==5.3.6
+
+# Testing
+pytest==8.0.0
+pytest-flask==1.3.0
+pytest-cov==4.1.0
+factory-boy==3.3.0
+faker==22.6.0
+
+# Code Quality
+black==24.1.1
+flake8==7.0.0
+pylint==3.0.3
+
+# Performance & Monitoring
+gunicorn==21.2.0  # Production WSGI server
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2024.1
