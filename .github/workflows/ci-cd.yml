@@ -55,6 +55,7 @@ jobs:
           DATABASE_URL: postgresql://postgres:Harsha@1998@localhost:5432/mini_erp_system
           SECRET_KEY: test-secret-key
           JWT_SECRET_KEY: test-jwt-secret-key
+          PYTHONPATH: .
         run: |
           pytest --cov=. --cov-report=xml --cov-report=html
 
