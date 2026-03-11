@@ -21,7 +21,7 @@ class Config:
 
     # Database settings
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL", "postgresql://erp_user:erp_password@localhost:5432/mini_erp_db"
+        "DATABASE_URL", "postgresql://postgres:Harsha%401998@localhost:5432/mini_erp_db"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False

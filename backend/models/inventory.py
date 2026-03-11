@@ -2,7 +2,7 @@
 Inventory Management Models
 Handles products, categories, stock, and warehouses
 """
-from app import db
+from extensions import db
 from models.base import TimestampMixin
 from sqlalchemy import CheckConstraint
 

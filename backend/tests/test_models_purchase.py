@@ -3,7 +3,7 @@ Unit tests for purchase models
 """
 import pytest
 from models import Supplier, PurchaseOrder, PurchaseOrderItem, Bill, Product, Category, Warehouse, User
-from app import db
+from extensions import db
 from decimal import Decimal
 from datetime import datetime, timedelta
 

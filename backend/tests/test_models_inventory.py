@@ -3,7 +3,7 @@ Unit tests for inventory models
 """
 import pytest
 from models import Category, Product, Warehouse, Stock, StockMovement, User
-from app import db
+from extensions import db
 from decimal import Decimal
 
 

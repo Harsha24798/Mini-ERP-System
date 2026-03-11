@@ -4,16 +4,8 @@ Main application entry point
 """
 
 from flask import Flask, jsonify
-from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
 from config import Config
-
-# Initialize extensions
-db = SQLAlchemy()
-migrate = Migrate()
-jwt = JWTManager()
+from extensions import db, migrate, jwt, cors
 
 
 def create_app(config_class=Config):
@@ -34,7 +26,21 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
-    CORS(app)
+    cors.init_app(app)
+    
+    # Configure JWT callbacks
+    @jwt.user_identity_loader
+    def user_identity_lookup(user_id):
+        """Callback to convert user_id to identity for JWT"""
+        return str(user_id)  # Ensure ID is string for JWT
+    
+    @jwt.user_lookup_loader
+    def user_lookup_callback(_jwt_header, jwt_data):
+        """Callback to load user from JWT"""
+        from models import User
+        identity = jwt_data["sub"]
+        user_id = int(identity)  # Convert string back to int
+        return User.query.filter_by(id=user_id).one_or_none()
     
     # Import models to ensure they are registered with SQLAlchemy
     with app.app_context():
@@ -45,9 +51,9 @@ def create_app(config_class=Config):
             Supplier, PurchaseOrder, PurchaseOrderItem, Bill
         )
 
-    # Register blueprints (will be added in later phases)
-    # from routes.auth_routes import auth_bp
-    # app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    # Register blueprints
+    from routes import register_blueprints
+    register_blueprints(app)
 
     # Health check endpoint
     @app.route("/api/health", methods=["GET"])

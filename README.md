@@ -23,24 +23,66 @@ A comprehensive Enterprise Resource Planning (ERP) system built with Flask (Back
 
 ## ✨ Features
 
-### Core Modules
-- **User Management**: Authentication, authorization, role-based access control (RBAC)
-- **Inventory Management**: Products, categories, stock tracking, warehouse management
-- **Sales Management**: Customers, sales orders, invoicing, payment tracking
-- **Purchase Management**: Suppliers, purchase orders, goods receiving, bill management
-- **Reporting & Analytics**: Dashboard with KPIs, sales reports, inventory reports
+### ✅ Implemented Features
 
-### Technical Features
-- JWT-based authentication
-- RESTful API design
-- Database migrations with Alembic
-- File upload support (images, documents)
-- PDF generation for invoices and reports
+#### User Management & Authentication (Phase 2)
+- ✅ JWT-based authentication (access + refresh tokens)
+- ✅ User registration with email validation
+- ✅ Secure login/logout
+- ✅ Role-based access control (Admin, Manager, Staff)
+- ✅ Permission-based authorization
+- ✅ Profile management (view/update)
+- ✅ Password change functionality
+- ✅ Token refresh mechanism
+- ✅ Account status management (active/inactive)
+
+#### Database Models (Phase 1)
+- ✅ User, Role, Permission models with RBAC
+- ✅ Category model with hierarchical structure
+- ✅ Product model with pricing and stock tracking
+- ✅ Warehouse model for multi-location inventory
+- ✅ Stock model with quantity tracking
+- ✅ StockMovement model for audit trail
+- ✅ Customer model with billing/shipping addresses
+- ✅ SalesOrder, SalesOrderItem, Invoice, Payment models
+- ✅ Supplier model with bank details
+- ✅ PurchaseOrder, PurchaseOrderItem, Bill models
+- ✅ Timestamp and soft delete mixins
+- ✅ Database migrations with Alembic
+
+### 🚧 Planned Features
+
+#### Inventory Management API (Phase 3 - Next)
+- Product CRUD operations
+- Category management
+- Stock tracking and updates
+- Warehouse operations
+- Low stock alerts
+- Search and filtering
+
+#### Sales Management (Phase 4)
+- Sales order processing
+- Invoice generation
+- Payment tracking
+- Customer management
+
+#### Purchase Management (Phase 5)
+- Purchase order creation
+- Supplier management
+- Bill processing
+- Goods receiving
+
+#### Reporting & Analytics (Phase 11)
+- Dashboard with KPIs
+- Sales reports
+- Inventory reports
+- Financial reports
+
+#### Advanced Features (Phase 15)
+- PDF generation for invoices
 - Excel/CSV import/export
-- Role-based permissions
-- Comprehensive error handling
-- Docker containerization
-- CI/CD pipeline with GitHub Actions
+- Email notifications
+- File upload support
 
 ## 🛠 Tech Stack
 
@@ -357,28 +399,80 @@ backend/tests/
 
 ## 📚 API Documentation
 
-Once the API is running, access the documentation:
+### Current Endpoints (Phase 2)
 
-- **Swagger UI**: http://localhost:5000/api/docs (Phase 3+)
-- **ReDoc**: http://localhost:5000/api/redoc (Phase 3+)
+#### System Health
+```bash
+GET /api/health              # Health check endpoint
+GET /                        # Root endpoint
+```
 
-### Example API Endpoints
+#### Authentication & Authorization
+```bash
+POST /api/auth/register      # Register new user
+POST /api/auth/login         # Login and get tokens
+POST /api/auth/refresh       # Refresh access token
+POST /api/auth/logout        # Logout (requires token)
+GET  /api/auth/me            # Get current user profile
+PUT  /api/auth/me            # Update user profile
+POST /api/auth/change-password  # Change password
+GET  /api/auth/verify-token  # Verify token validity
+```
+
+**📖 Full API Documentation:**
+- See [PHASE_2_COMPLETE.md](PHASE_2_COMPLETE.md) for detailed endpoint specifications
+- Includes request/response examples, error codes, and usage patterns
+
+### Example API Usage
+
+**Register a new user:**
+```bash
+curl -X POST http://localhost:5000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "johndoe",
+    "email": "john@example.com",
+    "password": "password123",
+    "first_name": "John",
+    "last_name": "Doe"
+  }'
+```
+
+**Login:**
+```bash
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "johndoe",
+    "password": "password123"
+  }'
+```
+
+**Access protected endpoint:**
+```bash
+curl -X GET http://localhost:5000/api/auth/me \
+  -H "Authorization: Bearer <your-access-token>"
+```
+
+### Test Users (from database seed)
+
+After running the seed script, these users are available:
+- **Admin**: `admin` / `admin123` (all permissions)
+- **Manager**: `manager` / `manager123` (all except user management)
+- **Staff**: `staff` / `staff123` (read + basic operations)
+
+### Coming Soon (Phase 3+)
 
 ```bash
-# Health check
-GET http://localhost:5000/api/health
-
-# Authentication (Phase 2)
-POST http://localhost:5000/api/auth/register
-POST http://localhost:5000/api/auth/login
-POST http://localhost:5000/api/auth/refresh
-
-# Inventory (Phase 3)
-GET http://localhost:5000/api/products
-POST http://localhost:5000/api/products
-GET http://localhost:5000/api/products/{id}
-PUT http://localhost:5000/api/products/{id}
-DELETE http://localhost:5000/api/products/{id}
+# Inventory Management
+GET    /api/categories       # List categories
+POST   /api/categories       # Create category
+GET    /api/products         # List products
+POST   /api/products         # Create product
+PUT    /api/products/{id}    # Update product
+DELETE /api/products/{id}    # Delete product
+GET    /api/stock/low        # Get low stock items
+POST   /api/stock/movement   # Record stock movement
 ```
 
 ## 🚢 Deployment
@@ -449,12 +543,55 @@ We welcome contributions! Please follow these steps:
 
 ## 📋 Development Phases
 
-- [x] **Phase 0**: Project Foundation & Setup ✅
-- [ ] **Phase 1**: Database Design & Implementation
-- [ ] **Phase 2**: Authentication & Authorization Backend
-- [ ] **Phase 3**: Inventory Management Backend
-- [ ] **Phase 4**: Sales Management Backend
-- [ ] **Phase 5**: Purchase Management Backend
+### ✅ Completed Phases
+
+- [x] **Phase 0**: Project Foundation & Setup ✅ *(Completed: March 8, 2026)*
+  - Complete project structure with backend folders
+  - Flask application with factory pattern
+  - Configuration system (Dev/Test/Prod)
+  - Virtual environment with dependencies
+  - Docker configuration (PostgreSQL, Redis)
+  - CI/CD pipeline with GitHub Actions
+  - Testing infrastructure with pytest
+  - Comprehensive documentation
+
+- [x] **Phase 1**: Database Design & Implementation ✅ *(Completed: March 9, 2026)*
+  - 14 database models implemented
+  - Base mixins (TimestampMixin, SoftDeleteMixin)
+  - User Management: User, Role, Permission with RBAC
+  - Inventory: Category, Product, Warehouse, Stock, StockMovement
+  - Sales: Customer, SalesOrder, SalesOrderItem, Invoice, Payment
+  - Purchase: Supplier, PurchaseOrder, PurchaseOrderItem, Bill
+  - Flask-Migrate setup with initial migration
+  - Database seeding script with sample data
+  - 31 model unit tests - All passing ✅
+  - See [PHASE_1_COMPLETE.md](PHASE_1_COMPLETE.md) for details
+
+- [x] **Phase 2**: Authentication & Authorization Backend ✅ *(Completed: March 10, 2026)*
+  - JWT-based authentication system
+  - 9 authentication endpoints (register, login, refresh, logout, profile, etc.)
+  - Authorization decorators (@token_required, @role_required, @permission_required)
+  - Password hashing and validation
+  - Token refresh mechanism
+  - User profile management
+  - 14 authentication tests - All passing ✅
+  - Complete API documentation
+  - See [PHASE_2_COMPLETE.md](PHASE_2_COMPLETE.md) for details
+
+**Total Tests: 45 passing (100%)** 🎉
+
+### 🚧 Upcoming Phases
+
+- [ ] **Phase 3**: Inventory Management Backend API
+  - Category CRUD operations
+  - Product management with stock tracking
+  - Warehouse operations
+  - Stock movement tracking
+  - Low stock alerts
+  - Search and filtering
+
+- [ ] **Phase 4**: Sales Management Backend API
+- [ ] **Phase 5**: Purchase Management Backend API
 - [ ] **Phase 6**: Frontend Foundation & Setup
 - [ ] **Phase 7**: Authentication Frontend
 - [ ] **Phase 8**: Inventory Management Frontend

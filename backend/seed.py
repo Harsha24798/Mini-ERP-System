@@ -2,7 +2,8 @@
 Database seeding script
 Populates database with sample data for development and testing
 """
-from app import create_app, db
+from app import create_app
+from extensions import db
 from models import (
     User, Role, Permission,
     Category, Product, Warehouse, Stock,

@@ -3,7 +3,7 @@ Unit tests for database models
 """
 import pytest
 from models import User, Role, Permission
-from app import db
+from extensions import db
 
 
 class TestUserModel:

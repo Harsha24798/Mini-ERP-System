@@ -2,7 +2,7 @@
 Purchase Management Models
 Handles suppliers, purchase orders, and bills
 """
-from app import db
+from extensions import db
 from models.base import TimestampMixin
 from sqlalchemy import CheckConstraint
 

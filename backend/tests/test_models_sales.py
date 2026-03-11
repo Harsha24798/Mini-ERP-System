@@ -3,7 +3,7 @@ Unit tests for sales models
 """
 import pytest
 from models import Customer, SalesOrder, SalesOrderItem, Invoice, Payment, Product, Category, Warehouse, User
-from app import db
+from extensions import db
 from decimal import Decimal
 from datetime import datetime, timedelta
 

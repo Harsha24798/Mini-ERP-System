@@ -3,7 +3,7 @@ Base models and mixins
 Common fields and utilities for all models
 """
 from datetime import datetime
-from app import db
+from extensions import db
 
 
 class TimestampMixin:

@@ -2,7 +2,7 @@
 User Management Models
 Handles authentication, roles, and permissions
 """
-from app import db
+from extensions import db
 from models.base import TimestampMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -66,6 +66,11 @@ class User(db.Model, TimestampMixin):
             if any(perm.name == permission_name for perm in role.permissions):
                 return True
         return False
+
+    def update_last_login(self):
+        """Update last login timestamp"""
+        from datetime import datetime
+        self.last_login = datetime.utcnow()
 
     def to_dict(self):
         """Convert user to dictionary (exclude password)"""

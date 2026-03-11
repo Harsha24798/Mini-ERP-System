@@ -2,7 +2,7 @@
 Sales Management Models
 Handles customers, sales orders, invoices, and payments
 """
-from app import db
+from extensions import db
 from models.base import TimestampMixin
 from sqlalchemy import CheckConstraint
 
