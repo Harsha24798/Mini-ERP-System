@@ -44,7 +44,7 @@ services:
     environment:
       - FLASK_APP=app:create_app
       - FLASK_ENV=development
-      - DATABASE_URL=postgresql://erp_user:erp_password@db:5432/mini_erp_db
+      - DATABASE_URL=postgresql://postgres:Harsha%401998@db:5432/mini_erp_db
       - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=${SECRET_KEY:-dev-secret-key}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY:-jwt-secret-key}
