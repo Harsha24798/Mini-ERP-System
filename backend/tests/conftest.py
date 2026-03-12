@@ -28,9 +28,9 @@ def db_session(app):
     with app.app_context():
         # Create tables before each test
         db.create_all()
-        
+
         yield db.session
-        
+
         # Clean up after each test
         db.session.remove()
         db.drop_all()

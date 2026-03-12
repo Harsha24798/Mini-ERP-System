@@ -27,32 +27,47 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     jwt.init_app(app)
     cors.init_app(app)
-    
+
     # Configure JWT callbacks
     @jwt.user_identity_loader
     def user_identity_lookup(user_id):
         """Callback to convert user_id to identity for JWT"""
         return str(user_id)  # Ensure ID is string for JWT
-    
+
     @jwt.user_lookup_loader
     def user_lookup_callback(_jwt_header, jwt_data):
         """Callback to load user from JWT"""
         from models import User
+
         identity = jwt_data["sub"]
         user_id = int(identity)  # Convert string back to int
         return User.query.filter_by(id=user_id).one_or_none()
-    
+
     # Import models to ensure they are registered with SQLAlchemy
     with app.app_context():
         from models import (
-            User, Role, Permission,
-            Category, Product, Warehouse, Stock, StockMovement,
-            Customer, SalesOrder, SalesOrderItem, Invoice, Payment,
-            Supplier, PurchaseOrder, PurchaseOrderItem, Bill
+            User,
+            Role,
+            Permission,
+            Category,
+            Product,
+            Warehouse,
+            Stock,
+            StockMovement,
+            Customer,
+            SalesOrder,
+            SalesOrderItem,
+            Invoice,
+            Payment,
+            Supplier,
+            PurchaseOrder,
+            PurchaseOrderItem,
+            Bill,
         )
 
     # Register blueprints
     from routes import register_blueprints
+
     register_blueprints(app)
 
     # Health check endpoint

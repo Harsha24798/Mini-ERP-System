@@ -35,9 +35,9 @@ class Config:
     JWT_HEADER_TYPE = "Bearer"
 
     # CORS settings
-    CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:5173").split(
-        ","
-    )
+    CORS_ORIGINS = os.getenv(
+        "CORS_ORIGINS", "http://localhost:3000,http://localhost:5173"
+    ).split(",")
 
     # Upload settings
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
