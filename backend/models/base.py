@@ -2,18 +2,23 @@
 Base models and mixins
 Common fields and utilities for all models
 """
+
 from datetime import datetime
 from extensions import db
 
 
 class TimestampMixin:
     """Mixin to add created_at and updated_at timestamps to models"""
+
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
 
 class SoftDeleteMixin:
     """Mixin to add soft delete functionality"""
+
     is_deleted = db.Column(db.Boolean, nullable=False, default=False)
     deleted_at = db.Column(db.DateTime, nullable=True)
 
