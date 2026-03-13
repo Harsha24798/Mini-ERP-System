@@ -52,13 +52,14 @@ A comprehensive Enterprise Resource Planning (ERP) system built with Flask (Back
 
 ### 🚧 Planned Features
 
-#### Inventory Management API (Phase 3 - Next)
-- Product CRUD operations
-- Category management
-- Stock tracking and updates
-- Warehouse operations
-- Low stock alerts
-- Search and filtering
+#### Inventory Management API (Phase 3 - Completed)
+- Category CRUD endpoints
+- Product CRUD endpoints with search and filters
+- Low stock API endpoint
+- Warehouse CRUD endpoints
+- Stock listing API with filters
+- Stock movement APIs (IN, OUT, TRANSFER, ADJUSTMENT)
+- Stock movement tracking endpoint
 
 #### Sales Management (Phase 4)
 - Sales order processing
@@ -461,18 +462,44 @@ After running the seed script, these users are available:
 - **Manager**: `manager` / `manager123` (all except user management)
 - **Staff**: `staff` / `staff123` (read + basic operations)
 
-### Coming Soon (Phase 3+)
+### Phase 3 Inventory Endpoints (Implemented)
 
 ```bash
-# Inventory Management
-GET    /api/categories       # List categories
-POST   /api/categories       # Create category
-GET    /api/products         # List products
-POST   /api/products         # Create product
-PUT    /api/products/{id}    # Update product
-DELETE /api/products/{id}    # Delete product
-GET    /api/stock/low        # Get low stock items
-POST   /api/stock/movement   # Record stock movement
+# Inventory Management (Phase 3)
+GET    /api/inventory/categories            # List categories
+POST   /api/inventory/categories            # Create category (auth required)
+GET    /api/inventory/categories/{id}       # Get category
+PUT    /api/inventory/categories/{id}       # Update category (auth required)
+DELETE /api/inventory/categories/{id}       # Deactivate category (auth required)
+
+GET    /api/inventory/products              # List/search products
+POST   /api/inventory/products              # Create product (auth required)
+GET    /api/inventory/products/{id}         # Get product
+PUT    /api/inventory/products/{id}         # Update product (auth required)
+DELETE /api/inventory/products/{id}         # Deactivate product (auth required)
+GET    /api/inventory/products/low-stock    # Get low stock products
+
+GET    /api/inventory/warehouses            # List/search warehouses
+POST   /api/inventory/warehouses            # Create warehouse (auth required)
+GET    /api/inventory/warehouses/{id}       # Get warehouse
+PUT    /api/inventory/warehouses/{id}       # Update warehouse (auth required)
+DELETE /api/inventory/warehouses/{id}       # Deactivate warehouse (auth required)
+
+GET    /api/inventory/stocks                # List stock with filters
+GET    /api/inventory/stocks/movements      # List stock movement logs
+POST   /api/inventory/stocks/movement       # Record stock movement (auth required)
+```
+
+### Coming Soon (Phase 4+)
+
+```bash
+# Sales Management
+POST   /api/sales/orders               # Create sales order
+GET    /api/sales/orders               # List sales orders
+
+# Purchase Management
+POST   /api/purchase/orders            # Create purchase order
+GET    /api/purchase/orders            # List purchase orders
 ```
 
 ## 🚢 Deployment
@@ -578,17 +605,19 @@ We welcome contributions! Please follow these steps:
   - Complete API documentation
   - See [PHASE_2_COMPLETE.md](PHASE_2_COMPLETE.md) for details
 
-**Total Tests: 45 passing (100%)** 🎉
+- [x] **Phase 3**: Inventory Management Backend API ✅ *(Completed: March 13, 2026)*
+   - Category CRUD operations with validation
+   - Product CRUD operations with search/filter/low stock support
+   - Warehouse CRUD operations
+   - Stock listing API with product/warehouse filtering
+   - Stock movement API (IN, OUT, TRANSFER, ADJUSTMENT)
+   - Stock movement tracking endpoint
+   - 12 inventory API tests added
+   - See [PHASE_3_COMPLETE.md](PHASE_3_COMPLETE.md) for details
+
+**Total Tests: 57 passing (expected after test run)** 🎉
 
 ### 🚧 Upcoming Phases
-
-- [ ] **Phase 3**: Inventory Management Backend API
-  - Category CRUD operations
-  - Product management with stock tracking
-  - Warehouse operations
-  - Stock movement tracking
-  - Low stock alerts
-  - Search and filtering
 
 - [ ] **Phase 4**: Sales Management Backend API
 - [ ] **Phase 5**: Purchase Management Backend API
