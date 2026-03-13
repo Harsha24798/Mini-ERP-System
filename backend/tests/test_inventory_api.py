@@ -62,7 +62,9 @@ class TestCategoryEndpoints:
         assert get_data["category"]["name"] == "Electronics"
 
     def test_update_and_delete_category(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="catuser", email="cat@test.com")
+        headers = _auth_headers(
+            client, db_session, username="catuser", email="cat@test.com"
+        )
 
         category = Category(name="Hardware", description="Old")
         db_session.add(category)
@@ -87,7 +89,9 @@ class TestCategoryEndpoints:
 
 class TestProductEndpoints:
     def test_create_product_and_filter_low_stock(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="produser", email="prod@test.com")
+        headers = _auth_headers(
+            client, db_session, username="produser", email="prod@test.com"
+        )
 
         category = Category(name="Components")
         warehouse = Warehouse(name="Main Warehouse", code="MAIN")
@@ -151,7 +155,9 @@ class TestProductEndpoints:
         assert data["products"][0]["sku"] == "CASE-001"
 
     def test_update_product(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="updprod", email="updprod@test.com")
+        headers = _auth_headers(
+            client, db_session, username="updprod", email="updprod@test.com"
+        )
 
         category = Category(name="Peripherals")
         db_session.add(category)
@@ -180,7 +186,9 @@ class TestProductEndpoints:
 
 class TestWarehouseEndpoints:
     def test_create_list_update_delete_warehouse(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="whuser", email="whuser@test.com")
+        headers = _auth_headers(
+            client, db_session, username="whuser", email="whuser@test.com"
+        )
 
         create_response = client.post(
             "/api/inventory/warehouses",
@@ -214,7 +222,9 @@ class TestWarehouseEndpoints:
 
 class TestStockMovementEndpoints:
     def test_record_in_and_out_movement_updates_stock(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="stkuser", email="stkuser@test.com")
+        headers = _auth_headers(
+            client, db_session, username="stkuser", email="stkuser@test.com"
+        )
 
         category = Category(name="Electrical")
         product = Product(
@@ -267,7 +277,9 @@ class TestStockMovementEndpoints:
         assert stocks_data["stocks"][0]["quantity"] == 11
 
     def test_transfer_movement_updates_both_warehouses(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="trfuser", email="trfuser@test.com")
+        headers = _auth_headers(
+            client, db_session, username="trfuser", email="trfuser@test.com"
+        )
 
         category = Category(name="Appliances")
         product = Product(
@@ -310,7 +322,9 @@ class TestStockMovementEndpoints:
         assert payload["destination_stock"]["quantity"] == 8
 
     def test_out_movement_fails_for_insufficient_stock(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="insuff", email="insuff@test.com")
+        headers = _auth_headers(
+            client, db_session, username="insuff", email="insuff@test.com"
+        )
 
         category = Category(name="Tools")
         product = Product(
@@ -344,7 +358,9 @@ class TestStockMovementEndpoints:
         assert "Insufficient stock" in data["error"]
 
     def test_list_stock_movements(self, client, db_session):
-        headers = _auth_headers(client, db_session, username="mvuser", email="mvuser@test.com")
+        headers = _auth_headers(
+            client, db_session, username="mvuser", email="mvuser@test.com"
+        )
 
         category = Category(name="Consumables")
         product = Product(

@@ -53,7 +53,9 @@ def _parse_decimal(value, field_name):
 
 
 def _get_or_create_stock(product_id, warehouse_id):
-    stock = Stock.query.filter_by(product_id=product_id, warehouse_id=warehouse_id).first()
+    stock = Stock.query.filter_by(
+        product_id=product_id, warehouse_id=warehouse_id
+    ).first()
     if stock:
         return stock
 
@@ -454,7 +456,9 @@ def delete_product(product_id):
 def low_stock_products():
     """Get products currently at or below reorder level."""
     products = Product.query.filter_by(is_active=True).all()
-    low_stock_items = [product.to_dict() for product in products if product.is_low_stock]
+    low_stock_items = [
+        product.to_dict() for product in products if product.is_low_stock
+    ]
 
     return jsonify({"products": low_stock_items, "count": len(low_stock_items)}), 200
 
@@ -479,7 +483,10 @@ def list_warehouses():
         query = query.filter(Warehouse.is_active == is_active)
 
     warehouses = query.order_by(Warehouse.name.asc()).all()
-    return jsonify({"warehouses": [warehouse.to_dict() for warehouse in warehouses]}), 200
+    return (
+        jsonify({"warehouses": [warehouse.to_dict() for warehouse in warehouses]}),
+        200,
+    )
 
 
 @inventory_bp.route("/warehouses", methods=["POST"])
@@ -531,7 +538,10 @@ def create_warehouse():
         )
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"error": "Failed to create warehouse", "details": str(exc)}), 500
+        return (
+            jsonify({"error": "Failed to create warehouse", "details": str(exc)}),
+            500,
+        )
 
 
 @inventory_bp.route("/warehouses/<int:warehouse_id>", methods=["GET"])
@@ -565,7 +575,10 @@ def update_warehouse(warehouse_id):
                 Warehouse.name.ilike(name),
             ).first()
             if duplicate_name:
-                return jsonify({"error": "Warehouse with this name already exists"}), 400
+                return (
+                    jsonify({"error": "Warehouse with this name already exists"}),
+                    400,
+                )
             warehouse.name = name
 
         if "code" in data:
@@ -578,7 +591,10 @@ def update_warehouse(warehouse_id):
                 Warehouse.code.ilike(code),
             ).first()
             if duplicate_code:
-                return jsonify({"error": "Warehouse with this code already exists"}), 400
+                return (
+                    jsonify({"error": "Warehouse with this code already exists"}),
+                    400,
+                )
             warehouse.code = code
 
         if "address" in data:
@@ -609,7 +625,10 @@ def update_warehouse(warehouse_id):
         )
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"error": "Failed to update warehouse", "details": str(exc)}), 500
+        return (
+            jsonify({"error": "Failed to update warehouse", "details": str(exc)}),
+            500,
+        )
 
 
 @inventory_bp.route("/warehouses/<int:warehouse_id>", methods=["DELETE"])
@@ -627,7 +646,10 @@ def delete_warehouse(warehouse_id):
         return jsonify({"message": "Warehouse deactivated successfully"}), 200
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"error": "Failed to delete warehouse", "details": str(exc)}), 500
+        return (
+            jsonify({"error": "Failed to delete warehouse", "details": str(exc)}),
+            500,
+        )
 
 
 @inventory_bp.route("/stocks", methods=["GET"])
@@ -656,9 +678,16 @@ def list_stocks():
     stocks = query.order_by(Stock.id.asc()).all()
 
     if low_stock is True:
-        stocks = [stock for stock in stocks if stock.product and stock.product.is_low_stock]
+        stocks = [
+            stock for stock in stocks if stock.product and stock.product.is_low_stock
+        ]
 
-    return jsonify({"stocks": [stock.to_dict() for stock in stocks], "count": len(stocks)}), 200
+    return (
+        jsonify(
+            {"stocks": [stock.to_dict() for stock in stocks], "count": len(stocks)}
+        ),
+        200,
+    )
 
 
 @inventory_bp.route("/stocks/movements", methods=["GET"])
@@ -746,11 +775,19 @@ def create_stock_movement():
         if movement_type == "TRANSFER":
             to_warehouse_id = data.get("to_warehouse_id")
             if to_warehouse_id in (None, ""):
-                return jsonify({"error": "to_warehouse_id is required for TRANSFER"}), 400
+                return (
+                    jsonify({"error": "to_warehouse_id is required for TRANSFER"}),
+                    400,
+                )
 
             to_warehouse_id = _parse_positive_int(to_warehouse_id, "to_warehouse_id")
             if to_warehouse_id == warehouse_id:
-                return jsonify({"error": "Transfer source and destination cannot be same"}), 400
+                return (
+                    jsonify(
+                        {"error": "Transfer source and destination cannot be same"}
+                    ),
+                    400,
+                )
 
             to_warehouse = Warehouse.query.get(to_warehouse_id)
             if not to_warehouse:
@@ -777,12 +814,18 @@ def create_stock_movement():
         elif movement_type == "ADJUSTMENT":
             new_quantity = source_stock.quantity + quantity_raw
             if new_quantity < 0:
-                return jsonify({"error": "Adjustment would result in negative stock"}), 400
+                return (
+                    jsonify({"error": "Adjustment would result in negative stock"}),
+                    400,
+                )
             source_stock.quantity = new_quantity
 
         elif movement_type == "TRANSFER":
             if source_stock.quantity < quantity_raw:
-                return jsonify({"error": "Insufficient stock for TRANSFER movement"}), 400
+                return (
+                    jsonify({"error": "Insufficient stock for TRANSFER movement"}),
+                    400,
+                )
 
             destination_stock = _get_or_create_stock(product_id, to_warehouse.id)
             source_stock.quantity -= quantity_raw
@@ -850,4 +893,7 @@ def create_stock_movement():
         return jsonify({"error": str(exc)}), 400
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"error": "Failed to record stock movement", "details": str(exc)}), 500
+        return (
+            jsonify({"error": "Failed to record stock movement", "details": str(exc)}),
+            500,
+        )
