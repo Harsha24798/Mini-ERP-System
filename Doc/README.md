@@ -422,6 +422,7 @@ GET  /api/auth/verify-token  # Verify token validity
 
 **📖 Full API Documentation:**
 - See [PHASE_2_COMPLETE.md](PHASE_2_COMPLETE.md) for detailed endpoint specifications
+- See [PHASE_API_TEST_DATA.md](PHASE_API_TEST_DATA.md) for Postman-ready test payloads (Auth, Inventory, and upcoming phases)
 - Includes request/response examples, error codes, and usage patterns
 
 ### Example API Usage
